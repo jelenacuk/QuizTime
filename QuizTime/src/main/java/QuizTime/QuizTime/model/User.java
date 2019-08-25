@@ -1,12 +1,27 @@
 package QuizTime.QuizTime.model;
 
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class User implements UserDetails {
 	
 	@Id
 	@GeneratedValue
@@ -26,6 +41,14 @@ public class User {
 	
 	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "last_password_reset_date")
+	private Timestamp lastPasswordResetDate;
+	
+
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+	private List<Authority> authorities;
 	
 	public User() {
 	}
@@ -86,7 +109,47 @@ public class User {
 		this.email = email;
 	}
 	
+	public Timestamp getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
+
+	public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+
+	public void setAuthorities(List<Authority> authorities) {
+		this.authorities = authorities;
+	}
+
 	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }
