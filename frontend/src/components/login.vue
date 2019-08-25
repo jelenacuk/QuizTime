@@ -10,7 +10,7 @@
                 <td><input type="password" v-model="password"/></td>
             </tr>
             <tr>
-                <td><button @click="register">Register</button></td>
+                <td><button @click="login">Register</button></td>
                 <td><button @click="back">Back</button></td>
             </tr>
         </table>
@@ -27,8 +27,11 @@
             }
         },
         methods:{
-            register(){
-                this.axios.post()
+            login(){
+                this.axios.post("http://localhost:8080/login",{"username":this.username,"password":this.password})
+                    .then((response) =>{
+                        console.log(response);
+                    } );
             },
             back(){
                 this.$router.push("/")
