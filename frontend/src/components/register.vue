@@ -49,7 +49,7 @@
         },
         methods:{
             register(){
-                this.axios.post("http://localhost:8080/register",{"username":this.username,"password":this.password,"firstName":this.firstName,"lastName":this.lastName,"email":this.email})
+                this.axios.post("http://localhost:8080/auth/register",{"username":this.username,"password":this.password,"firstName":this.firstName,"lastName":this.lastName,"email":this.email})
                     .then((response) =>{
                         console.log(response);
                     } );

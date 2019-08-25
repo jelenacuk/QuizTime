@@ -28,7 +28,7 @@
         },
         methods:{
             login(){
-                this.axios.post("http://localhost:8080/login",{"username":this.username,"password":this.password})
+                this.axios.post("http://localhost:8080/auth/login",{"username":this.username,"password":this.password})
                     .then((response) =>{
                         console.log(response);
                     } );
