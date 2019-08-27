@@ -1,42 +1,92 @@
 <template>
     <div>
-        <table>
-            <tr>
-                <td>Username</td>
-                <td><input type="text" v-model="username"/></td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><input type="email" v-model="email"/></td>
-            </tr>
-            <tr>
-                <td>FirstName</td>
-                <td><input type="text" v-model="firstName"/></td>
-            </tr>
-            <tr>
-                <td>Last name</td>
-                <td><input type="text" v-model="lastName"/></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" v-model="password"/></td>
-            </tr>
-            <tr>
-                <td>Confirm password</td>
-                <td><input type="password" v-model="confirmPassword"/></td>
-            </tr>
-            <tr>
-                <td><button @click="register">Register</button></td>
-                <td><button @click="back">Back</button></td>
-            </tr>
-        </table>
+        <navBar></navBar>
+        <v-container grid-list-md text-xs-center>
+            <v-row>
+                <v-col align="center">
+                    <v-card>
+                        <h1>Register</h1>
+                        <br/>
+                        <table class="px-0 centered">
+                            <tr>
+                                <td>
+                                    <v-text-field
+                                            v-model="username"
+                                            label="Username"
+                                            required
+                                    ></v-text-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <v-text-field
+                                            v-model="email"
+                                            label="Email"
+                                            required
+                                    ></v-text-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <v-text-field
+                                            v-model="firstName"
+                                            label="FirstName"
+                                            required
+                                    ></v-text-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <v-text-field
+                                            v-model="lastName"
+                                            label="Last Name"
+                                            required
+                                    ></v-text-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <v-text-field
+                                            v-model="password"
+                                            label="Password"
+                                            :type="'password'"
+                                            required
+                                    ></v-text-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  id="confirm">
+                                    <v-text-field
+                                            v-model="confirmPassword"
+                                            label="Confirm Password"
+                                            :type="'password'"
+                                            required
+                                    ></v-text-field>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <v-btn large color="primary" @click="register">Register</v-btn></td>
+                                <td><v-btn large color="primary" @click="back">Back</v-btn></td>
+
+                            </tr>
+                        </table>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
 
     </div>
 </template>
 
 <script>
+    import navBar from "./navBar.vue"
+
     export default {
         name: "register",
+        components:{
+            navBar
+        },
         data(){
             return{
                 username:"",
@@ -49,10 +99,16 @@
         },
         methods:{
             register(){
-                this.axios.post("http://localhost:8080/auth/register",{"username":this.username,"password":this.password,"firstName":this.firstName,"lastName":this.lastName,"email":this.email})
-                    .then((response) =>{
-                        console.log(response);
-                    } );
+                if(this.password===this.confirmPassword && this.password!=""){
+                    this.axios.post("http://localhost:8080/auth/register",{"username":this.username,"password":this.password,"firstName":this.firstName,"lastName":this.lastName,"email":this.email})
+                        .then((response) =>{
+                            console.log(response);
+                        } );
+                }else{
+                   var confirmElement = document.getElementById("confirm");
+                   confirmElement.classList.add("notEntered");
+                }
+
             },
             back(){
                 this.$router.push("/")
@@ -63,5 +119,11 @@
 </script>
 
 <style scoped>
-
+    .centered{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .notEntered{
+        border: 1px solid red;
+    }
 </style>
