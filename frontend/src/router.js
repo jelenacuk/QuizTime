@@ -27,6 +27,11 @@ export default new Router({
             path: '/login',
             name: 'Login',
             component: () => import('./components/login.vue')
+        },
+        {
+            path: '/createQuiz',
+            name: 'createQuiz',
+            component: () => import('./components/createQuiz.vue')
         }
 
     ]
