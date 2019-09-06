@@ -1,10 +1,14 @@
 <template>
     <div>
+          <!-- TO DO  -->
+          <!-- 
+              1. Zastiti da nijedno polje ne moze biti prazno (question, answer)
+              2. Pitanje mora imati minimum 2 odgovora
+              3. Bar jedan odgovor treba da bude tacan
+              4. Pronaci neki lep alert 
+          -->
         <navbar></navbar>
-
-
-       <v-container >
-
+        <v-container >
            <!-- FORMA ZA OSNOVNE INFO O KVIZU  -->
            <v-container>
                <form align= "center">
