@@ -14,8 +14,8 @@
                 <v-toolbar>
                     <div class="flex-grow-1"></div>
                     <v-toolbar-items>
-                        <v-btn text> Home</v-btn>
-                        <v-btn text>Make Quiz</v-btn>
+                        <v-btn  text> Home</v-btn>
+                        <v-btn @click="createQuiz" text>Create Quiz</v-btn>
                         <v-btn text>Profile</v-btn>
                         <v-btn text>Friends</v-btn>
                         <v-btn text>Log Out</v-btn>
@@ -29,7 +29,12 @@
 
 <script>
     export default {
-        name: "navBar"
+        name: "navBar",
+        methods: {
+            createQuiz: function(){
+                this.$router.push("/createQuiz");
+            }
+        }
     }
 </script>
 
