@@ -54,7 +54,6 @@ public class QuizController {
 			Question question = new Question(questionBean.getText(), questionType, quiz);
 			questionService.save(question);
 			Set<Answer> answers = new HashSet<Answer>();
-			//iteriram kroz odgovore
 			for (AnswerBean answerBean : questionBean.getAnswers() ) {
 				answers.add(new Answer(answerBean.getText(), answerBean.isCorrect(), question));
 			}

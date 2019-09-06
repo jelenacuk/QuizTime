@@ -133,6 +133,7 @@
 
 <script>
 import navBar from "./navBar.vue"
+import axios from 'axios'
     export default {
         name: "createQuiz",
          components: {
@@ -147,6 +148,7 @@ import navBar from "./navBar.vue"
                 categories: ["General Knoledge", "Science", "Geography", "History", "Music", "Film", "Sport", "Religion", "Books"],
 
                 questions: [],
+                correct_cnt: 0,
                 question_text: "",
 
                 answers: [],
@@ -173,20 +175,30 @@ import navBar from "./navBar.vue"
                 var newQuiz = {title: this.title, description: this.description, time: this.time, category: this.category,
                                 questions: this.questions}
                 //axios zahtev
+                var getJwtToken = function() {
+                    return localStorage.getItem("jwtToken");
+                };
+                axios.defaults.headers.common["Authorization"] = "Bearer " + getJwtToken();
+                this.axios.post("http://localhost:8080/createQuiz",newQuiz)
+                        .then((response) =>{
+                            console.log(response);
+                        } );
             },
 
             createQuestion: function(){
-                var newQuestion = { text: this.question_text, answers: this.answers};
+                var newQuestion = { text: this.question_text, answers: this.answers, correct_cnt: this.correct_cnt};
                 this.questions.push(newQuestion);
                 this.question_text = "";
                 this.answers = [];
                 this.dialog = false;
+                this.correct_cnt = 0;
             },
 
             closeQuestionDialog:function(){
 
                 this.question_text = "";
                 this.answers = [];
+                this.correct_cnt = 0;
                 this.dialog = false;
             },
 
@@ -195,9 +207,10 @@ import navBar from "./navBar.vue"
             },
 
             createAnswer: function(){
-                var correct = true;
-                if (this.answer_correct == "radio-2"){
-                    correct = false;
+                var correct = false;
+                if (this.answer_correct == "radio-1"){
+                    correct = true;
+                    this.correct_cnt+= 1;
                 }
                 var newAnswer = {text: this.answer_text, correct: correct};
                 this.answers.push(newAnswer);
