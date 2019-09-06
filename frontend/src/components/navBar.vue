@@ -14,6 +14,7 @@
                 <v-toolbar>
                     <div class="flex-grow-1"></div>
                     <v-toolbar-items>
+                        <v-btn text> Home</v-btn>
                         <v-btn text>Make Quiz</v-btn>
                         <v-btn text>Profile</v-btn>
                         <v-btn text>Friends</v-btn>
