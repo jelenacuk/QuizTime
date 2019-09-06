@@ -25,6 +25,10 @@ public class AnswerService {
 		return repository.save(answer);
 	}
 	
+	public List<Answer> saveAll(List<Answer> answers) {
+		return repository.saveAll(answers);
+	}
+	
 	public void remove(Long id) {
 		//repository.delete(id);
 	}

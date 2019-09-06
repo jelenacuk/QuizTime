@@ -30,7 +30,7 @@ public class Quiz {
 		super();
 	}
 
-	public Quiz(String title, String description, String category, int time, Set<Question> questions) {
+	public Quiz(String title, String description, String category, int time) {
 		super();
 		this.title = title;
 		this.description = description;
