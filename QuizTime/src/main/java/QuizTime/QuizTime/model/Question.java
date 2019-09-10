@@ -27,11 +27,10 @@ public class Question {
 		super();
 	}
 
-	public Question(String text, Quiz quiz, Set<Answer> answers, QuestionType questionType) {
+	public Question(String text, QuestionType questionType, Quiz quiz) {
 		super();
 		this.text = text;
 		this.quiz = quiz;
-		this.answers = answers;
 		this.questionType = questionType;
 	}
 

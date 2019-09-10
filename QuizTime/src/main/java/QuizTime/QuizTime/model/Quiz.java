@@ -17,6 +17,10 @@ public class Quiz {
 	private String title;
 	@Column(name = "description")
 	private String description;
+	@Column(name = "category")
+	private String category;
+	@Column(name = "time")
+	private int time;
 	@OneToMany(mappedBy = "quiz")
 	private Set<Question> questions;
 	@OneToMany(mappedBy = "quiz")
@@ -26,10 +30,12 @@ public class Quiz {
 		super();
 	}
 
-	public Quiz(String title, String description, Set<Question> questions) {
+	public Quiz(String title, String description, String category, int time) {
 		super();
 		this.title = title;
 		this.description = description;
+		this.category = category;
+		this.time = time;
 		this.questions = questions;
 	}
 
@@ -55,6 +61,22 @@ public class Quiz {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
 	}
 
 	public Set<Question> getQuestions() {

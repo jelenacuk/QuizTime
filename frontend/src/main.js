@@ -17,3 +17,8 @@ new Vue({
     render: h => h(App)
 }).$mount('#app');
 Vue.use(VueAxios, axios);
+function setHeader(val){
+    axios.defaults.headers.post['Authorization'] = "Bearer " + val;
+    axios.defaults.headers.get['Authorization'] = "Bearer " + val;
+    console.log("Header set");
+  }
