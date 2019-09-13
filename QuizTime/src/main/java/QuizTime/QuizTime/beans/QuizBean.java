@@ -14,6 +14,13 @@ public class QuizBean {
 		// TODO Auto-generated constructor stub
 	}
 
+	public QuizBean(String title, String description, String category, int time) {
+		this.title = title;
+		this.description = description;
+		this.category = category;
+		this.time = time;
+	}
+
 	public String getTitle() {
 		return title;
 	}

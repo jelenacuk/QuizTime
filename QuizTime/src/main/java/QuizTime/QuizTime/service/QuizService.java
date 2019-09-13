@@ -21,6 +21,7 @@ public class QuizService {
 	public List<Quiz> findAll() {
 		return repository.findAll();
 	}
+	
 	public Quiz save(Quiz quiz) {
 		return repository.save(quiz);
 	}
