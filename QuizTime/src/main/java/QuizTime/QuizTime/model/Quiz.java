@@ -36,7 +36,6 @@ public class Quiz {
 		this.description = description;
 		this.category = category;
 		this.time = time;
-		this.questions = questions;
 	}
 
 	public Long getId() {

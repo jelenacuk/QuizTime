@@ -23,8 +23,10 @@
                         v-for="(item, i) in items"
                         :key="i"
                         :value="item.title"
+                        @click="selectCategory(item.title)"
                         link
                     >
+                    
                         <v-list-item-icon>
                         <v-icon>{{ item.icon }}</v-icon>
                         </v-list-item-icon>
@@ -61,6 +63,11 @@
             ],
             right: null,
             category: 'General Knowledge'
+            }
+        },
+        methods: {
+            selectCategory: function(value){
+                this.$emit('clicked', value);
             }
         }
     }

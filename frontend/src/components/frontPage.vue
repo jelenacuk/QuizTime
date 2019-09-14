@@ -1,14 +1,15 @@
 <template>
     <div >
+         <!-- TO DO  -->
+          <!-- 
+              1. Paging
+          -->
         <navbar></navbar>
         <v-container>
-
-           
-
             <v-row justify="start" align="start">
 
                 <v-col cols="3">
-                     <sidemenu></sidemenu>
+                     <sidemenu   @clicked="onCategorySelection"></sidemenu>
                 </v-col>
 
                 <v-col >
@@ -24,14 +25,14 @@
                                         </td>
                                         
                                         <td>
-                                            <v-text-field 
+                                            <v-text-field v-model="minQuestions"
                                                 type="number"
                                                 label="Min number">
                                             </v-text-field>
                                         </td>
                                        
                                         <td>
-                                            <v-text-field
+                                            <v-text-field v-model="maxQuestions"
                                                 type="number"
                                                 label="Max number">
                                             </v-text-field>
@@ -44,14 +45,14 @@
                                             </v-label>
                                         </td>
                                         <td colspan="2">
-                                             <v-radio-group  row>
-                                                <v-radio label="Yes" value="radio-1" style="margin-right: 50px;"></v-radio>
+                                             <v-radio-group v-model="time"  row>
+                                                <v-radio label="Yes"  value="radio-1" style="margin-right: 50px;"></v-radio>
                                                 <v-radio label="NO" value="radio-2"></v-radio>
                                             </v-radio-group>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3" style="text-align: center"><v-btn  small color="success" >Apply Filters</v-btn></td>
+                                        <td colspan="3" @click="applyFilters" style="text-align: center"><v-btn  small color="success" >Apply Filters</v-btn></td>
                                     </tr>        
                                 </table>
                         </v-card-text>
@@ -62,7 +63,7 @@
                     <v-card v-for="(quiz, i) in this.quizes" :key="i"   class="mx-auto quizInfo" >
                         <v-row class="mx-12 " >
                             <v-col >
-                                <h2>{{quiz.name}}</h2>
+                                <h2>{{quiz.title}}</h2>
                                 <v-btn large color="success" >Play</v-btn>
                             </v-col>
                             <v-col class="my-auto">
@@ -83,6 +84,7 @@
 <script>
     import navBar from "./navBar.vue"
     import sideMenu from "./sideMenu.vue"
+    import axios from 'axios'
     export default {
         name: "frontPage",
         components: {
@@ -91,8 +93,47 @@
         },
         data() {
             return {
-                quizes: [{name: "QuizName1", description: 'Easy', category: 'Science', creator: 'pera'},
-                        {name: "QuizName2", description: 'Medium', category: 'Music', creator: 'mira'}]
+                quizes: [],
+                category: "General Knowledge",
+                minQuestions: "",
+                maxQuestions: "",
+                time: "radio-1",
+                paging: 1
+            }
+        },
+
+        created: function(){
+            var getJwtToken = function() {
+                return localStorage.getItem("jwtToken");
+            };
+            axios.defaults.headers.common["Authorization"] = "Bearer " + getJwtToken();
+            axios.get("http://localhost:8080/api/getQuizes/1")
+            .then(response => {
+                this.quizes = response.data
+            });
+        },
+
+        methods: {
+
+            applyFilters: function(){
+                var limited = true;
+                if (this.time == "radio-2"){
+                    limited = false;
+                }
+                var filter = {minQuestions: this.minQuestions, maxQuestions: this.maxQuestions, category: this.category, time: limited}
+                var getJwtToken = function() {
+                    return localStorage.getItem("jwtToken");
+                };
+                axios.defaults.headers.common["Authorization"] = "Bearer " + getJwtToken();
+                this.axios.post("http://localhost:8080/searchQuizes", filter)
+                .then(response => {
+                    this.quizes = response.data
+                });
+            },
+
+            onCategorySelection: function(value) {
+                this.category = value;
+                this.applyFilters();
             }
         }
     }
